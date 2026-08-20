@@ -1,0 +1,9 @@
+{
+  "name": "Lav Mittal \u2022 Class 12 CBSE Tracker",
+  "short_name": "Lav Tracker",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#090b10",
+  "theme_color": "#7c5cff",
+  "orientation": "portrait"
+}

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7c5cff">
+<link rel="manifest" href="manifest.json">
+<title>Lav Mittal • Class 12 Tracker</title>
+<style>
+:root{--bg:#090b10;--card:#131720;--card2:#1a1f2a;--text:#f5f7fb;--muted:#98a1b2;--accent:#7c5cff;--good:#39d98a;--warn:#ffc76b;--bad:#ff6b81;--line:#252b37}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:20px 16px 12px;position:sticky;top:0;z-index:5;background:rgba(9,11,16,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+h1{font-size:22px;margin:0}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+nav{position:sticky;top:78px;z-index:4;display:flex;gap:7px;overflow:auto;padding:10px 12px;background:var(--bg)}
+nav button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 13px;border-radius:999px;white-space:nowrap}
+nav button.active{background:var(--accent);border-color:var(--accent)}
+main{max-width:850px;margin:auto;padding:6px 14px 42px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:15px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.big{font-size:31px;font-weight:850}.muted{color:var(--muted)}.small{font-size:12px}
+.progress{height:9px;background:#252b37;border-radius:20px;overflow:hidden;margin:9px 0}.bar{height:100%;background:var(--accent);border-radius:20px}
+.subject{display:flex;justify-content:space-between;gap:8px}.subject b{font-size:14px}
+button,input{font:inherit}button{cursor:pointer}.primary{border:0;background:var(--accent);color:#fff;padding:10px 13px;border-radius:11px}.secondary{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:9px 11px;border-radius:10px}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}input{background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px;width:100%}
+label{display:block;color:var(--muted);font-size:12px;margin:8px 0 4px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:9px 5px;border-bottom:1px solid var(--line)}.done{color:var(--good)}.warn{color:var(--warn)}
+.badge{font-size:10px;border:1px solid var(--line);padding:3px 6px;border-radius:999px;color:var(--muted)}
+.alert{border-left:3px solid var(--warn);padding-left:10px}.kpi{font-size:13px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
+</style>
+</head>
+<body>
+<header><h1>Lav Mittal • Class 12 CBSE</h1><div class="sub">PCM • 2026–27 • Dark offline study dashboard • Target 95%</div></header>
+<nav id="nav"></nav><main id="app"></main>
+<footer>Your progress is stored locally on this device. Export a backup before changing/resetting the browser.</footer>
+<script>
+const BASE={"profile": {"name": "Lav Mittal", "class": "12", "board": "CBSE", "session": "2026-27", "stream": "PCM", "medium": "English", "target_percentage": 95, "full_syllabus_deadline": "2026-12-01", "school_exam_window": "2026-09-16 to 2026-09-29", "daily_schedule": {"classes": "08:00-13:40", "remedial": "15:00-16:30", "supervision": "18:00-19:30"}}, "half_yearly": {"Physics": [1, 2, 3, 4, 5, 6, 7, 8, 9], "Chemistry": [1, 2, 3, 4, 5, 6, 7], "Mathematics": [1, 2, 3, 4, 5, 6, 7, 8, 9]}, "subjects": {"Physics": ["Electric Charges and Fields", "Electrostatic Potential and Capacitance", "Current Electricity", "Moving Charges and Magnetism", "Magnetism and Matter", "Electromagnetic Induction", "Alternating Current", "Electromagnetic Waves", "Ray Optics and Optical Instruments", "Wave Optics", "Dual Nature of Radiation and Matter", "Atoms", "Nuclei", "Semiconductor Electronics: Materials, Devices and Simple Circuits"], "Chemistry": ["Solutions", "Electrochemistry", "Chemical Kinetics", "d- and f-Block Elements", "Coordination Compounds", "Haloalkanes and Haloarenes", "Alcohols, Phenols and Ethers", "Aldehydes, Ketones and Carboxylic Acids", "Amines", "Biomolecules"], "Mathematics": ["Relations and Functions", "Inverse Trigonometric Functions", "Matrices", "Determinants", "Continuity and Differentiability", "Applications of Derivatives", "Integrals", "Application of Integrals", "Differential Equations", "Vector Algebra", "Three Dimensional Geometry", "Linear Programming", "Probability"]}, "initial_progress": {"Physics": {"1": 1.0, "2": 0.0}, "Chemistry": {"1": 0.0, "2": 0.0, "3": 0.0}, "Mathematics": {"1": 0.0, "2": 0.0, "3": 1.0, "4": 1.0, "5": 0.4}}, "initial_notes": {"Physics": "Chapter 1 completely studied. Chapter 2 started from Parishram; 5 lectures completed.", "Chemistry": "Chapters 1-3 are the current starting area. Lakshya batch backlog: 5 lectures missed in each of the relevant chapters as supplied.", "Mathematics": "Chapter 3 completely prepared from NCERT. Chapter 4 completely prepared from NCERT. Chapter 5 is about 40% done from NCERT only; not from lectures.", "Study_preference": "Needs explanation/lectures rather than relying only on books."}};
+const saved=localStorage.getItem("lav_tracker_v2");
+let state=saved?JSON.parse(saved):{
+ progress:BASE.initial_progress,
+ studyMinutes:0,
+ daily:{},
+ tests:[],
+ reminders:{daily:true,start:true,notifications:true},
+ lastOpen:""
+};
+const subjects=Object.keys(BASE.subjects);
+let page="Dashboard";
+function save(){localStorage.setItem("lav_tracker_v2",JSON.stringify(state))}
+function percent(x){return Math.round(x*100)}
+function subjectPct(s){
+ const vals=BASE.subjects[s].map((_,i)=>Number(state.progress[s]?.[i+1]||0));
+ return vals.reduce((a,b)=>a+b,0)/(vals.length||1);
+}
+function overall(){
+ let a=[];subjects.forEach(s=>BASE.subjects[s].forEach((_,i)=>a.push(Number(state.progress[s]?.[i+1]||0))));
+ return a.reduce((x,y)=>x+y,0)/(a.length||1);
+}
+function daysLeft(){return Math.max(0,Math.ceil((new Date("2026-12-01T00:00:00")-new Date())/86400000))}
+function renderNav(){document.getElementById("nav").innerHTML=["Dashboard","Syllabus","Today","Tests","Settings"].map(x=>`<button class="${page===x?"active":""}" onclick="page='${x}';render()">${x}</button>`).join("")}
+function render(){
+ renderNav();
+ const a=document.getElementById("app");
+ a.innerHTML=page==="Dashboard"?dashboard():page==="Syllabus"?syllabus():page==="Today"?today():page==="Tests"?tests():settings();
+}
+function dashboard(){
+ const o=overall();
+ const rem=subjects.map(s=>`${s}: ${BASE.subjects[s].length-Math.round(subjectPct(s)*BASE.subjects[s].length)} chapters`).join(" • ");
+ return `<div class="card">
+ <div class="muted">Overall syllabus progress</div><div class="big">${percent(o)}%</div>
+ <div class="progress"><div class="bar" style="width:${percent(o)}%"></div></div>
+ <div class="small">${daysLeft()} days left until 1 Dec 2026 • Full syllabus target</div>
+ </div>
+ <div class="grid">${subjects.map(s=>`<div class="card"><div class="subject"><b>${s}</b><span>${percent(subjectPct(s))}%</span></div><div class="progress"><div class="bar" style="width:${percent(subjectPct(s))}%"></div></div><div class="small muted">${BASE.subjects[s].length} chapters</div></div>`).join("")}</div>
+ <div class="card"><b>🎯 Today's target</b><p class="muted">The target is deliberately flexible because your JNV schedule changes. On a busy day do the minimum target; on a free day use the extra block to clear backlog.</p>
+ <div class="row"><button class="primary" onclick="makeTarget()">Generate today's target</button><button class="secondary" onclick="page='Today';render()">Open Today</button></div></div>
+ <div class="card"><b>⏰ Your JNV routine</b><div class="kpi">Classes <b>08:00–13:40</b> • Remedial <b>15:00–16:30</b> • Supervision <b>18:00–19:30</b></div><p class="small muted">Supervision is usually attended only occasionally, so the planner does not assume it every day.</p></div>
+ <div class="card"><b>📌 Starting position</b>
+ <p class="small">Physics: Ch 1 complete; Ch 2 started, 5 lectures completed.</p>
+ <p class="small">Chemistry: current area Ch 1–3; Lakshya backlog recorded as 5 missed lectures in each relevant chapter.</p>
+ <p class="small">Maths: Ch 3 & 4 complete from NCERT; Ch 5 = 40% from NCERT only.</p></div>
+ <div class="card"><b>Remaining by subject</b><p class="small muted">${rem}</p></div>`;
+}
+function makeTarget(){
+ const d=new Date().toISOString().slice(0,10);
+ state.daily[d]=state.daily[d]||[];
+ const base=[
+  "Physics: continue Ch 2 — complete the next lecture/concept block + 15–20 questions",
+  "Chemistry: clear one Lakshya backlog lecture block + make short notes",
+  "Mathematics: continue Ch 5 NCERT from the 40% point + solve examples/exercises",
+  "10–15 min revision of yesterday's work"
+ ];
+ state.daily[d]=base.map(x=>({text:x,done:false}));save();page="Today";render();
+}
+function syllabus(){
+ return `<div class="card"><b>Half-yearly scope</b><p class="small">Physics Ch 1–9 • Chemistry Ch 1–7 • Mathematics Ch 1–9</p><p class="small muted">HY chapters are marked <span class="badge">HY</span>. Progress is chapter-based; partial progress is supported.</p></div>`+
+ subjects.map(s=>`<div class="card"><h3>${s}</h3><table><tr><th>Chapter</th><th>Progress</th><th></th></tr>${BASE.subjects[s].map((ch,i)=>{let n=i+1,v=Number(state.progress[s]?.[n]||0),hy=BASE.half_yearly[s].includes(n);return `<tr><td>${n}. ${ch} ${hy?'<span class="badge">HY</span>':''}</td><td>${percent(v)}%</td><td><button class="secondary" onclick="editProgress('${s}',${n})">${v>=1?"✓ Done":v>0?"Partial":"Start"}</button></td></tr>`}).join("")}</table></div>`).join("");
+}
+function editProgress(s,n){
+ const current=Number(state.progress[s]?.[n]||0);
+ const input=prompt(`Enter progress for ${s} Chapter ${n} (0 to 100):`,String(Math.round(current*100)));
+ if(input===null)return;
+ const p=Math.max(0,Math.min(100,Number(input)));
+ if(!state.progress[s])state.progress[s]={};state.progress[s][n]=p/100;save();render();
+}
+function today(){
+ const d=new Date().toISOString().slice(0,10);const list=state.daily[d]||[];
+ return `<div class="card"><b>Today • ${d}</b><p class="muted">Recommended sequence: lecture/explanation → notes → NCERT → questions → PYQ/revision.</p>
+ <div class="row"><input id="task" placeholder="Add a specific target" style="flex:1"><button class="primary" onclick="addTask()">Add</button></div>
+ ${list.map((t,i)=>`<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:10px 0"><span class="${t.done?'done':''}">${t.done?'✓':'○'} ${t.text}</span><button class="secondary" onclick="toggleTask(${i})">${t.done?'Undo':'Done'}</button></div>`).join("")}
+ <hr style="border-color:var(--line);border-width:1px 0 0;margin:15px 0">
+ <div class="row"><input id="mins" type="number" min="0" placeholder="Study minutes completed today" style="max-width:240px"><button class="primary" onclick="logMinutes()">Log</button></div>
+ <p class="small muted">Total logged study time: ${state.studyMinutes} min</p></div>
+ <div class="card alert"><b>Flexible JNV rule</b><p class="small muted">If remedial takes your afternoon, shift the main target to the evening. If supervision is scheduled, reduce the target rather than breaking the streak.</p></div>`;
+}
+function addTask(){const x=document.getElementById("task").value.trim();if(!x)return;const d=new Date().toISOString().slice(0,10);state.daily[d]=state.daily[d]||[];state.daily[d].push({text:x,done:false});save();render()}
+function toggleTask(i){const d=new Date().toISOString().slice(0,10);state.daily[d][i].done=!state.daily[d][i].done;save();render()}
+function logMinutes(){const n=Number(document.getElementById("mins").value||0);if(n>0){state.studyMinutes+=n;save();render()}}
+function tests(){
+ return `<div class="card"><b>📊 Test tracker</b><p class="muted">Track school tests, half-yearly and later mocks against the 95% goal.</p>
+ <div class="grid"><input id="tn" placeholder="Test name"><input id="tm" type="number" placeholder="Marks"><input id="tx" type="number" placeholder="Max marks"><input id="td" type="date"></div><br><button class="primary" onclick="addTest()">Save test</button></div>
+ <div class="card"><table><tr><th>Test</th><th>Marks</th><th>%</th></tr>${state.tests.map(t=>`<tr><td>${t.name}<div class="small muted">${t.date||""}</div></td><td>${t.m}/${t.x}</td><td>${Math.round(t.m/t.x*100)}%</td></tr>`).join("")}</table></div>`;
+}
+function addTest(){const name=tn.value.trim(),m=Number(tm.value),x=Number(tx.value);if(name&&x){state.tests.push({name,m,x,date:td.value});save();render()}}
+function settings(){
+ return `<div class="card"><b>Profile</b><p class="small">Lav Mittal • Class 12 • CBSE • PCM • English • 2026–27</p><p class="small">Target 95% • Full syllabus by 1 Dec 2026 • School exams 16–29 Sep 2026</p></div>
+ <div class="card"><b>🔔 Reminders</b><p class="small muted">Daily target reminder and study-start reminder are part of the design. Android may require notification permission and can restrict background reminders.</p><button class="secondary" onclick="alert('Reminder settings are enabled in the tracker. For reliable Android notifications, allow notifications when prompted by your installed PWA.')">Check reminder setup</button></div>
+ <div class="card"><b>💾 Backup</b><p class="small muted">Export your local tracker data before changing phones or clearing Chrome.</p><button class="primary" onclick="exportData()">Export JSON</button> <button class="secondary" onclick="resetData()">Reset logged data</button></div>
+ <div class="card"><b>Android format</b><p class="small muted">This build is an offline-first PWA, which is more suitable for Android Chrome than a desktop Chrome extension. Once installed, it behaves like an app and keeps progress locally.</p></div>`;
+}
+function exportData(){const b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Lav_Mittal_Class12_backup.json";a.click()}
+function resetData(){if(confirm("Reset your logged progress, tasks and tests? The original profile/syllabus will remain.")){localStorage.removeItem("lav_tracker_v2");location.reload()}}
+if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+render();
+</script>
+</body></html>
