@@ -5,130 +5,246 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#7c5cff">
 <link rel="manifest" href="manifest.json">
-<title>Lav Mittal • Class 12 Tracker</title>
+<title>Lav Mittal • Class 12 PCM Tracker</title>
 <style>
-:root{--bg:#090b10;--card:#131720;--card2:#1a1f2a;--text:#f5f7fb;--muted:#98a1b2;--accent:#7c5cff;--good:#39d98a;--warn:#ffc76b;--bad:#ff6b81;--line:#252b37}
+:root{--bg:#090b10;--card:#131720;--card2:#1a1f2a;--text:#f5f7fb;--muted:#98a1b2;--accent:#7c5cff;--good:#39d98a;--warn:#ffc76b;--bad:#ff6b81;--line:#252b37;--blue:#5da9ff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-header{padding:20px 16px 12px;position:sticky;top:0;z-index:5;background:rgba(9,11,16,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-h1{font-size:22px;margin:0}.sub{font-size:12px;color:var(--muted);margin-top:4px}
-nav{position:sticky;top:78px;z-index:4;display:flex;gap:7px;overflow:auto;padding:10px 12px;background:var(--bg)}
+header{padding:18px 14px 10px;position:sticky;top:0;z-index:10;background:rgba(9,11,16,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+h1{font-size:21px;margin:0}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+nav{position:sticky;top:69px;z-index:9;display:flex;gap:7px;overflow:auto;padding:9px 10px;background:var(--bg);border-bottom:1px solid var(--line)}
 nav button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 13px;border-radius:999px;white-space:nowrap}
 nav button.active{background:var(--accent);border-color:var(--accent)}
-main{max-width:850px;margin:auto;padding:6px 14px 42px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:15px;margin:10px 0}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.big{font-size:31px;font-weight:850}.muted{color:var(--muted)}.small{font-size:12px}
-.progress{height:9px;background:#252b37;border-radius:20px;overflow:hidden;margin:9px 0}.bar{height:100%;background:var(--accent);border-radius:20px}
+main{max-width:980px;margin:auto;padding:7px 12px 50px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px;margin:9px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.big{font-size:30px;font-weight:850}.muted{color:var(--muted)}.small{font-size:12px}.tiny{font-size:11px}
+.progress{height:8px;background:#252b37;border-radius:20px;overflow:hidden;margin:8px 0}.bar{height:100%;background:var(--accent);border-radius:20px}
 .subject{display:flex;justify-content:space-between;gap:8px}.subject b{font-size:14px}
-button,input{font:inherit}button{cursor:pointer}.primary{border:0;background:var(--accent);color:#fff;padding:10px 13px;border-radius:11px}.secondary{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:9px 11px;border-radius:10px}
-.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}input{background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px;width:100%}
-label{display:block;color:var(--muted);font-size:12px;margin:8px 0 4px}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:9px 5px;border-bottom:1px solid var(--line)}.done{color:var(--good)}.warn{color:var(--warn)}
-.badge{font-size:10px;border:1px solid var(--line);padding:3px 6px;border-radius:999px;color:var(--muted)}
-.alert{border-left:3px solid var(--warn);padding-left:10px}.kpi{font-size:13px}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.primary{border:0;background:var(--accent);color:#fff;padding:10px 13px;border-radius:11px}.secondary{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:9px 11px;border-radius:10px}.danger{border:1px solid #6c2a38;background:#2b151b;color:#ff9bac;padding:9px 11px;border-radius:10px}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}input,select,textarea{background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px;width:100%}textarea{min-height:80px}
+label{display:block;color:var(--muted);font-size:12px;margin:7px 0 4px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:8px 5px;border-bottom:1px solid var(--line);vertical-align:top}
+.badge{font-size:10px;border:1px solid var(--line);padding:3px 6px;border-radius:999px;color:var(--muted);white-space:nowrap}.badge.good{color:var(--good)}.badge.warn{color:var(--warn)}.badge.future{color:var(--blue)}
+.alert{border-left:3px solid var(--warn);padding-left:10px}.priority{border-left:3px solid var(--bad);padding-left:10px}
+.task{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}
+.task.done .tasktext{text-decoration:line-through;color:var(--muted)}
+.chapter-card{background:var(--card2);border:1px solid var(--line);border-radius:14px;margin:8px 0;overflow:hidden}.chapter-head{width:100%;display:block;text-align:left;background:transparent;color:var(--text);border:0;padding:13px}.chapter-head:active{transform:scale(.995)}.chapter-tools{padding:0}.chapter-actions{display:flex;gap:7px;flex-wrap:wrap;padding:0 12px 12px}.chapter-actions button{min-height:40px}.chapter-body{padding:0 12px 10px;border-top:1px solid var(--line)}.chapter-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:8px}.mini-stat{background:var(--card);border-radius:10px;padding:7px;font-size:11px}.mini-stat b{display:block;font-size:14px}.lecture-mini{padding:10px 0;border-bottom:1px solid var(--line)}.lecture-mini:last-child{border-bottom:0}.kpi{font-size:13px}.nowrap{white-space:nowrap}.scroll{overflow:auto}
+details{background:var(--card2);border:1px solid var(--line);border-radius:12px;margin:7px 0;padding:8px}summary{cursor:pointer;font-weight:700}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:20px}
+@media(max-width:600px){.grid3{grid-template-columns:1fr 1fr}.big{font-size:26px}th:nth-child(4),td:nth-child(4){display:none}nav{top:67px}}
 </style>
 </head>
 <body>
-<header><h1>Lav Mittal • Class 12 CBSE</h1><div class="sub">PCM • 2026–27 • Dark offline study dashboard • Target 95%</div></header>
+<header><h1 id="appTitle">Lav Mittal • Class 12 CBSE</h1><div class="sub" id="appSub">PCM • 2026–27 • Dark offline-first study dashboard</div></header>
 <nav id="nav"></nav><main id="app"></main>
-<footer>Your progress is stored locally on this device. Export a backup before changing/resetting the browser.</footer>
-<script>
-const BASE={"profile": {"name": "Lav Mittal", "class": "12", "board": "CBSE", "session": "2026-27", "stream": "PCM", "medium": "English", "target_percentage": 95, "full_syllabus_deadline": "2026-12-01", "school_exam_window": "2026-09-16 to 2026-09-29", "daily_schedule": {"classes": "08:00-13:40", "remedial": "15:00-16:30", "supervision": "18:00-19:30"}}, "half_yearly": {"Physics": [1, 2, 3, 4, 5, 6, 7, 8, 9], "Chemistry": [1, 2, 3, 4, 5, 6, 7], "Mathematics": [1, 2, 3, 4, 5, 6, 7, 8, 9]}, "subjects": {"Physics": ["Electric Charges and Fields", "Electrostatic Potential and Capacitance", "Current Electricity", "Moving Charges and Magnetism", "Magnetism and Matter", "Electromagnetic Induction", "Alternating Current", "Electromagnetic Waves", "Ray Optics and Optical Instruments", "Wave Optics", "Dual Nature of Radiation and Matter", "Atoms", "Nuclei", "Semiconductor Electronics: Materials, Devices and Simple Circuits"], "Chemistry": ["Solutions", "Electrochemistry", "Chemical Kinetics", "d- and f-Block Elements", "Coordination Compounds", "Haloalkanes and Haloarenes", "Alcohols, Phenols and Ethers", "Aldehydes, Ketones and Carboxylic Acids", "Amines", "Biomolecules"], "Mathematics": ["Relations and Functions", "Inverse Trigonometric Functions", "Matrices", "Determinants", "Continuity and Differentiability", "Applications of Derivatives", "Integrals", "Application of Integrals", "Differential Equations", "Vector Algebra", "Three Dimensional Geometry", "Linear Programming", "Probability"]}, "initial_progress": {"Physics": {"1": 1.0, "2": 0.0}, "Chemistry": {"1": 0.0, "2": 0.0, "3": 0.0}, "Mathematics": {"1": 0.0, "2": 0.0, "3": 1.0, "4": 1.0, "5": 0.4}}, "initial_notes": {"Physics": "Chapter 1 completely studied. Chapter 2 started from Parishram; 5 lectures completed.", "Chemistry": "Chapters 1-3 are the current starting area. Lakshya batch backlog: 5 lectures missed in each of the relevant chapters as supplied.", "Mathematics": "Chapter 3 completely prepared from NCERT. Chapter 4 completely prepared from NCERT. Chapter 5 is about 40% done from NCERT only; not from lectures.", "Study_preference": "Needs explanation/lectures rather than relying only on books."}};
-const saved=localStorage.getItem("lav_tracker_v2");
-let state=saved?JSON.parse(saved):{
- progress:BASE.initial_progress,
- studyMinutes:0,
- daily:{},
- tests:[],
- reminders:{daily:true,start:true,notifications:true},
- lastOpen:""
-};
-const subjects=Object.keys(BASE.subjects);
-let page="Dashboard";
-function save(){localStorage.setItem("lav_tracker_v2",JSON.stringify(state))}
-function percent(x){return Math.round(x*100)}
-function subjectPct(s){
- const vals=BASE.subjects[s].map((_,i)=>Number(state.progress[s]?.[i+1]||0));
- return vals.reduce((a,b)=>a+b,0)/(vals.length||1);
-}
-function overall(){
- let a=[];subjects.forEach(s=>BASE.subjects[s].forEach((_,i)=>a.push(Number(state.progress[s]?.[i+1]||0))));
- return a.reduce((x,y)=>x+y,0)/(a.length||1);
-}
-function daysLeft(){return Math.max(0,Math.ceil((new Date("2026-12-01T00:00:00")-new Date())/86400000))}
-function renderNav(){document.getElementById("nav").innerHTML=["Dashboard","Syllabus","Today","Tests","Settings"].map(x=>`<button class="${page===x?"active":""}" onclick="page='${x}';render()">${x}</button>`).join("")}
-function render(){
- renderNav();
- const a=document.getElementById("app");
- a.innerHTML=page==="Dashboard"?dashboard():page==="Syllabus"?syllabus():page==="Today"?today():page==="Tests"?tests():settings();
-}
-function dashboard(){
- const o=overall();
- const rem=subjects.map(s=>`${s}: ${BASE.subjects[s].length-Math.round(subjectPct(s)*BASE.subjects[s].length)} chapters`).join(" • ");
- return `<div class="card">
- <div class="muted">Overall syllabus progress</div><div class="big">${percent(o)}%</div>
- <div class="progress"><div class="bar" style="width:${percent(o)}%"></div></div>
- <div class="small">${daysLeft()} days left until 1 Dec 2026 • Full syllabus target</div>
- </div>
- <div class="grid">${subjects.map(s=>`<div class="card"><div class="subject"><b>${s}</b><span>${percent(subjectPct(s))}%</span></div><div class="progress"><div class="bar" style="width:${percent(subjectPct(s))}%"></div></div><div class="small muted">${BASE.subjects[s].length} chapters</div></div>`).join("")}</div>
- <div class="card"><b>🎯 Today's target</b><p class="muted">The target is deliberately flexible because your JNV schedule changes. On a busy day do the minimum target; on a free day use the extra block to clear backlog.</p>
- <div class="row"><button class="primary" onclick="makeTarget()">Generate today's target</button><button class="secondary" onclick="page='Today';render()">Open Today</button></div></div>
- <div class="card"><b>⏰ Your JNV routine</b><div class="kpi">Classes <b>08:00–13:40</b> • Remedial <b>15:00–16:30</b> • Supervision <b>18:00–19:30</b></div><p class="small muted">Supervision is usually attended only occasionally, so the planner does not assume it every day.</p></div>
- <div class="card"><b>📌 Starting position</b>
- <p class="small">Physics: Ch 1 complete; Ch 2 started, 5 lectures completed.</p>
- <p class="small">Chemistry: current area Ch 1–3; Lakshya backlog recorded as 5 missed lectures in each relevant chapter.</p>
- <p class="small">Maths: Ch 3 & 4 complete from NCERT; Ch 5 = 40% from NCERT only.</p></div>
- <div class="card"><b>Remaining by subject</b><p class="small muted">${rem}</p></div>`;
-}
-function makeTarget(){
- const d=new Date().toISOString().slice(0,10);
- state.daily[d]=state.daily[d]||[];
- const base=[
-  "Physics: continue Ch 2 — complete the next lecture/concept block + 15–20 questions",
-  "Chemistry: clear one Lakshya backlog lecture block + make short notes",
-  "Mathematics: continue Ch 5 NCERT from the 40% point + solve examples/exercises",
-  "10–15 min revision of yesterday's work"
- ];
- state.daily[d]=base.map(x=>({text:x,done:false}));save();page="Today";render();
-}
-function syllabus(){
- return `<div class="card"><b>Half-yearly scope</b><p class="small">Physics Ch 1–9 • Chemistry Ch 1–7 • Mathematics Ch 1–9</p><p class="small muted">HY chapters are marked <span class="badge">HY</span>. Progress is chapter-based; partial progress is supported.</p></div>`+
- subjects.map(s=>`<div class="card"><h3>${s}</h3><table><tr><th>Chapter</th><th>Progress</th><th></th></tr>${BASE.subjects[s].map((ch,i)=>{let n=i+1,v=Number(state.progress[s]?.[n]||0),hy=BASE.half_yearly[s].includes(n);return `<tr><td>${n}. ${ch} ${hy?'<span class="badge">HY</span>':''}</td><td>${percent(v)}%</td><td><button class="secondary" onclick="editProgress('${s}',${n})">${v>=1?"✓ Done":v>0?"Partial":"Start"}</button></td></tr>`}).join("")}</table></div>`).join("");
-}
-function editProgress(s,n){
- const current=Number(state.progress[s]?.[n]||0);
- const input=prompt(`Enter progress for ${s} Chapter ${n} (0 to 100):`,String(Math.round(current*100)));
- if(input===null)return;
- const p=Math.max(0,Math.min(100,Number(input)));
- if(!state.progress[s])state.progress[s]={};state.progress[s][n]=p/100;save();render();
-}
-function today(){
- const d=new Date().toISOString().slice(0,10);const list=state.daily[d]||[];
- return `<div class="card"><b>Today • ${d}</b><p class="muted">Recommended sequence: lecture/explanation → notes → NCERT → questions → PYQ/revision.</p>
- <div class="row"><input id="task" placeholder="Add a specific target" style="flex:1"><button class="primary" onclick="addTask()">Add</button></div>
- ${list.map((t,i)=>`<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:10px 0"><span class="${t.done?'done':''}">${t.done?'✓':'○'} ${t.text}</span><button class="secondary" onclick="toggleTask(${i})">${t.done?'Undo':'Done'}</button></div>`).join("")}
- <hr style="border-color:var(--line);border-width:1px 0 0;margin:15px 0">
- <div class="row"><input id="mins" type="number" min="0" placeholder="Study minutes completed today" style="max-width:240px"><button class="primary" onclick="logMinutes()">Log</button></div>
- <p class="small muted">Total logged study time: ${state.studyMinutes} min</p></div>
- <div class="card alert"><b>Flexible JNV rule</b><p class="small muted">If remedial takes your afternoon, shift the main target to the evening. If supervision is scheduled, reduce the target rather than breaking the streak.</p></div>`;
-}
-function addTask(){const x=document.getElementById("task").value.trim();if(!x)return;const d=new Date().toISOString().slice(0,10);state.daily[d]=state.daily[d]||[];state.daily[d].push({text:x,done:false});save();render()}
-function toggleTask(i){const d=new Date().toISOString().slice(0,10);state.daily[d][i].done=!state.daily[d][i].done;save();render()}
-function logMinutes(){const n=Number(document.getElementById("mins").value||0);if(n>0){state.studyMinutes+=n;save();render()}}
-function tests(){
- return `<div class="card"><b>📊 Test tracker</b><p class="muted">Track school tests, half-yearly and later mocks against the 95% goal.</p>
- <div class="grid"><input id="tn" placeholder="Test name"><input id="tm" type="number" placeholder="Marks"><input id="tx" type="number" placeholder="Max marks"><input id="td" type="date"></div><br><button class="primary" onclick="addTest()">Save test</button></div>
- <div class="card"><table><tr><th>Test</th><th>Marks</th><th>%</th></tr>${state.tests.map(t=>`<tr><td>${t.name}<div class="small muted">${t.date||""}</div></td><td>${t.m}/${t.x}</td><td>${Math.round(t.m/t.x*100)}%</td></tr>`).join("")}</table></div>`;
-}
-function addTest(){const name=tn.value.trim(),m=Number(tm.value),x=Number(tx.value);if(name&&x){state.tests.push({name,m,x,date:td.value});save();render()}}
-function settings(){
- return `<div class="card"><b>Profile</b><p class="small">Lav Mittal • Class 12 • CBSE • PCM • English • 2026–27</p><p class="small">Target 95% • Full syllabus by 1 Dec 2026 • School exams 16–29 Sep 2026</p></div>
- <div class="card"><b>🔔 Reminders</b><p class="small muted">Daily target reminder and study-start reminder are part of the design. Android may require notification permission and can restrict background reminders.</p><button class="secondary" onclick="alert('Reminder settings are enabled in the tracker. For reliable Android notifications, allow notifications when prompted by your installed PWA.')">Check reminder setup</button></div>
- <div class="card"><b>💾 Backup</b><p class="small muted">Export your local tracker data before changing phones or clearing Chrome.</p><button class="primary" onclick="exportData()">Export JSON</button> <button class="secondary" onclick="resetData()">Reset logged data</button></div>
- <div class="card"><b>Android format</b><p class="small muted">This build is an offline-first PWA, which is more suitable for Android Chrome than a desktop Chrome extension. Once installed, it behaves like an app and keeps progress locally.</p></div>`;
-}
-function exportData(){const b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Lav_Mittal_Class12_backup.json";a.click()}
-function resetData(){if(confirm("Reset your logged progress, tasks and tests? The original profile/syllabus will remain.")){localStorage.removeItem("lav_tracker_v2");location.reload()}}
-if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
-render();
-</script>
-</body></html>
+<footer>All planner/progress edits are stored locally on this device. Export JSON before changing/resetting browser data.</footer>
+<script type="text/plain" id="app-code">
+// @ts-nocheck
+/* @ts-nocheck */
+"use strict";
+
+/* Planner data transcribed from the three supplied PW PDFs.
+   Each row is a lecture. Notes/exercises are not separate rows.
+   Completion is user-controlled and persisted locally. */
+const RAW = {
+Maths: `
+2026-07-28|Matrices|1|Introduction To Matrices || Types Of Matrices
+2026-08-03|Matrices|2|Types Of Matrices || Equality Of Matrices
+2026-08-04|Matrices|3|Operations On Matrices
+2026-08-05|Matrices|4|Transpose Of Matrix
+2026-08-10|Matrices|5|Symmetric And Skew Symmetric Matrix | Inverse Of Matrix Doubts And Practice
+2026-08-11|Determinants|1|Introduction To Determinants
+2026-08-12|Determinants|2|Minors || Cofactors And Adjoint Of Matrix
+2026-08-17|Determinants|3|Inverse Of Matrix
+2026-08-18|Determinants|4|Consistency Of Linear Equations
+2026-08-19|Determinants|5|Solving System Of Linear Equations
+2026-08-24|Determinants|6|Doubts And Practice
+2026-08-25|Relations And Functions|1|Relations And Its Domain And Range
+2026-08-26|Relations And Functions|2|Types Of Relation
+2026-08-31|Relations And Functions|3|Functions And Its Domain And Range
+2026-09-01|Relations And Functions|4|Types Of Functions - 1
+2026-09-02|Relations And Functions|5|Composition Of Function And Invertible Function Practice And Doubts
+2026-09-07|Inverse Trigonometric Functions|1|Basic Trigonometry
+2026-09-08|Inverse Trigonometric Functions|2|Introduction To Itf
+2026-09-09|Inverse Trigonometric Functions|3|Principal Value Branch - 1
+2026-09-14|Inverse Trigonometric Functions|4|Properties Of Itf
+2026-09-15|Inverse Trigonometric Functions|5|Doubts And Practice
+2026-09-16|Continuity And Differentiability|1|Basic Calculus & Limits
+2026-09-21|Continuity And Differentiability|2|Continuity
+2026-09-22|Continuity And Differentiability|3|Differentiability
+2026-09-23|Continuity And Differentiability|4|Basic Differentiability
+2026-09-28|Continuity And Differentiability|5|Methods Of Differentiation
+2026-09-29|Continuity And Differentiability|6|Methods Of Differentiation || Logarithmic Differentiation
+2026-09-30|Continuity And Differentiability|7|Parametric And Second Order Derivatives
+2026-10-05|Continuity And Differentiability|8|Doubts And Practice
+2026-10-06|Application Of Derivatives|1|Rate Of Change Of Quantities
+2026-10-07|Application Of Derivatives|2|Increasing - Decreasing Functions
+2026-10-12|Application Of Derivatives|3|Maxima And Minima
+2026-10-13|Application Of Derivatives|4|Maxima And Minima - Ii
+2026-10-14|Application Of Derivatives|5|Doubts And Practice
+2026-10-21|Integrals|1|Introduction Of Integrals
+2026-10-26|Integrals|2|Substitution Method
+2026-10-27|Integrals|3|Integration Using Trigonometric Identities || Integrals Of Some Particular Functions
+2026-10-28|Integrals|4|Integration By Partial Fraction
+2026-11-02|Integrals|5|Integration By Parts
+2026-11-03|Integrals|6|Special Integration | Integration Practice
+2026-11-04|Integrals|7|Introduction Of Definite Integration || Definite Integration By Substitution
+2026-11-05|Integrals|8|Properties Of Definite Integration
+2026-11-12|Integrals|9|Doubts And Practice
+2026-11-17|Application Of Integration|1|Area Under The Curve
+2026-11-18|Application Of Integration|2|Area Under The Curve - 2
+2026-11-19|Differential Equations|1|Order And Degree Of Differential Equations
+2026-11-23|Differential Equations|2|Variable Separable Method
+2026-11-25|Differential Equations|3|Homogeneous Differential Equation
+2026-11-26|Differential Equations|4|Linear Differential Equation
+2026-11-30|Differential Equations|5|Doubts And Practice
+2026-12-01|Linear Programming|1|Introduction
+2026-12-02|Linear Programming|2|Doubts And Practice
+2026-12-03|Vector|1|Vectors || Direction And Magnitude
+2026-12-07|Vector|2|Direction Ratios || Direction Cosines || Addition Of Vectors || Scalar Multiplication || Section Formula
+2026-12-08|Vector|3|Vectors Joining Two Points || Section Formula ||
+2026-12-09|Vector|4|Scalar Or Dot Product Of Two Vectors
+2026-12-10|Vector|5|Projection Of A Vector And Vector Product
+2026-12-14|Three Dimensional Geometry|1|Basic Formulas || Direction Ratios || Cosines Of Line
+2026-12-15|Three Dimensional Geometry|2|Equation Of A Line || Angle Between Two Lines || Shortest Distance Between Lines
+2026-12-16|Three Dimensional Geometry|3|Practice Session
+2026-12-17|Probability|1|Introduction Of Probability || Conditional Probability
+2026-12-21|Probability|2|Multiplication Theorem In Probability And Independent Events ||
+2026-12-22|Probability|3|Theorem Of Total Probability And Bayes Theorem || Random Variable || Distribution Table And Mean
+`,
+Physics: `
+2026-04-23|Electric Charges and Fields|1|Introduction To Class XII Physics || Electric Charges and its Properties
+2026-04-29|Electric Charges and Fields|2|Methods of Charging || Coulomb's Law
+2026-04-30|Electric Charges and Fields|3|Vector Form of Coulomb's Law || Superposition Principle
+2026-05-05|Electric Charges and Fields|4|Electric Field || Electric Field Lines
+2026-05-06|Electric Charges and Fields|5|Continuous Charge Distribution || Electric Dipole
+2026-05-07|Electric Charges and Fields|6|Dipole in Uniform EF || Torque
+2026-05-12|Electric Charges and Fields|7|Electric Flux and Gauss Theorem
+2026-05-13|Electric Charges and Fields|8|Applications of Gauss Law
+2026-05-14|Electric Charges and Fields|9|NCERT || PYQ
+2026-05-19|Electrostatic Potential and Capacitance|1|Electrostatic Potential Energy
+2026-05-20|Electrostatic Potential and Capacitance|2|Electrostatic Potential Energy - 02
+2026-05-21|Electrostatic Potential and Capacitance|3|Electric Potential ||
+2026-05-26|Electrostatic Potential and Capacitance|4|Equipotential Surface || Electric Dipole in Terms of Energy and Potential
+2026-05-28|Electrostatic Potential and Capacitance|5|Electric Dipole in Terms of Energy and Potential ||
+2026-06-02|Electrostatic Potential and Capacitance|6|Conductors
+2026-06-03|Electrostatic Potential and Capacitance|7|Capacitance
+2026-06-04|Electrostatic Potential and Capacitance|8|Series and Parallel Combination
+2026-06-09|Electrostatic Potential and Capacitance|9|Dielectrics ||
+2026-06-10|Electrostatic Potential and Capacitance|10|Dielectrics in Capacitors
+2026-06-11|Current Electricity|1|Electric Current
+2026-06-23|Current Electricity|2|Ohm's Law || Factors Affecting Resistance
+2026-06-24|Current Electricity|3|Drift Velocity || Resistance and Resistivity || Temperature Dependence Graphs
+2026-06-25|Current Electricity|4|Current Density || Limitations of Ohm's Law || Combination of Resistors
+2026-06-30|Current Electricity|5|Kirchoff's Laws
+2026-07-01|Current Electricity|6|Emf of A Cell || Combination of Cells
+2026-07-02|Current Electricity|7|Energy and Power
+2026-07-07|Current Electricity|8|Practice Session
+2026-07-08|Magnetic Effects of Current|1|Introduction to Electromagnetism || Biot Savart Law ||
+2026-07-09|Magnetic Effects of Current|2|Magnetic Field Due To Current Carrying Loop
+2026-07-14|Magnetic Effects of Current|3|Ampere's Circuital Law
+2026-07-15|Magnetic Effects of Current|4|Motion of A Charge in Magnetic Field
+2026-07-16|Magnetic Effects of Current|5|Force On Current Carrying Conductor In Magnetic Field
+2026-07-21|Magnetic Effects of Current|6|Magnetic Dipole Moment || Torque On A Coil
+2026-07-22|Magnetic Effects of Current|7|Torque On A Coil || Moving Coil Galvanometer || Conversion of Galvanometer
+2026-07-23|Magnetic Effects of Current|8|Practice Session ||
+2026-07-28|Magnetism and Matter|1|Magnetic Field Due To A Bar Magnet || Dipole In Uniform Magnetic Field
+2026-07-29|Magnetism and Matter|2|Temperature Dependence || Practice Session
+2026-07-30|Magnetism and Matter|3|QUESTION PRACTISE
+2026-08-04|Electromagnetic Induction|1|Lenz Law || Motional EMF ||
+2026-08-05|Electromagnetic Induction|2|Self Inductance || Rotational EMF
+2026-08-06|Electromagnetic Induction|3|Mutual Inductance || AC Generator ||
+2026-08-11|Electromagnetic Induction|4|Practice Session (PYQs)
+2026-08-12|Alternating Current|1|Average & RMS Value of AC
+2026-08-13|Alternating Current|2|AC Source Connected to R,L,C || Phasors
+2026-08-18|Alternating Current|3|Series LCR Circuit || Resonance
+2026-08-19|Alternating Current|4|Resonance Contd. || Transformer ||
+2026-08-20|Alternating Current|5|Practice Questions ||
+2026-08-25|Electromagnetic Waves|1|Electromagnetic Waves : One Shot
+2026-08-26|Electromagnetic Waves|2|Practice Session ||
+2026-08-27|Ray Optics and Optical Instruments|1|Laws of Reflection || Plane Mirror
+2026-09-01|Ray Optics and Optical Instruments|2|Spherical Mirrors ||
+2026-09-02|Ray Optics and Optical Instruments|3|Important Derivations Related To Mirrors
+2026-09-03|Ray Optics and Optical Instruments|4|Refraction of Light || Refractive Index ||
+2026-09-08|Ray Optics and Optical Instruments|5|Total Internal Reflection and Prism
+2026-09-09|Ray Optics and Optical Instruments|6|Dispersion || Lenses
+2026-09-10|Ray Optics and Optical Instruments|7|Lens Maker's Formula || Refraction Through Lenses ||
+2026-09-15|Ray Optics and Optical Instruments|8|Optical Instruments ||
+2026-09-16|Ray Optics and Optical Instruments|9|Optical Instruments - II
+2026-09-17|Ray Optics and Optical Instruments|10|Practice Session ||
+2026-09-22|Wave Optics|1|Concept of Wavefront and Huygens Principle
+2026-09-23|Wave Optics|2|Interference and YDSE
+2026-09-24|Wave Optics|3|Diffraction ||
+2026-09-29|Wave Optics|4|Diffraction (Contd.) || Polarization
+2026-09-30|Dual Nature of Radiation and Matter|1|Photon Theory || Photoelectric Effect ||
+2026-10-01|Dual Nature of Radiation and Matter|2|Einstein's Equation || Matter Waves ||
+2026-10-06|Atoms|1|One Shot
+2026-10-07|Atoms|2|Practice Session ||
+2026-10-08|Nuclei|1|Nuclear Size and Composition ||
+2026-10-13|Nuclei|2|Binding Energy ||
+2026-10-14|Semiconductor Electronics : Materials, Devices and Simple Circuits|1|Band Theory ||
+2026-10-15|Semiconductor Electronics : Materials, Devices and Simple Circuits|2|p - n Junction Diode || Diode as Rectifier ||
+2026-10-21|Semiconductor Electronics : Materials, Devices and Simple Circuits|3|Practice Session ||
+2026-10-22|Practice Session|1|Practice Session : Electric Charges and Fields
+2026-10-27|Practice Session|2|Practice Session : Electrostatic Potential and Capacitance
+2026-10-28|Practice Session|3|Practice Session : Current Electricity
+2026-10-29|Practice Session|4|Practice Session : Moving Charges and Magnetism || Magnetism and Matter
+2026-11-03|Practice Session|5|Practice Session : Electromagnetic Induction || Alternating Current || Electromagnetic Waves
+2026-11-04|Practice Session|6|Practice Session : Atoms || Nuclei
+2026-11-05|Practice Session|7|Practice Session : Dual Nature of Radiation and Matter and Wave Optics ||
+2026-11-12|Practice Session|8|Practice Session : PYQs
+2026-11-17|Practice Session|9|Practice Session : PYQs
+`,
+Organic: `
+2026-08-12|Optical Isomerism|1|What is Optical Activity, Measurement of optical rotations || Optical Rotation & Optical Purity
+2026-08-13|Optical Isomerism|2|Definition and Examples of Optical Isomerism
+2026-08-14|Optical Isomerism|3|Criteria to display optical activity
+2026-08-19|Optical Isomerism|4|Absolute and Relative Configuration
+2026-08-20|Optical Isomerism|5|Optical isomerism in compounds with one Stereocenter
+2026-08-21|Optical Isomerism|6|Optical isomerism in compounds without chiral centre
+2026-08-22|Optical Isomerism|7|Properties of Enantiomers
+2026-08-26|Optical Isomerism|8|Properties of Enantiomers
+2026-08-27|Optical Isomerism|9|Properties of Diasteromers
+2026-08-29|Optical Isomerism|10|Properties of Diasteromers
+2026-08-31|Optical Isomerism|11|Number of optical isomers (trick)
+2026-09-01|Optical Isomerism|12|Number of optical isomers (trick)
+2026-09-02|Hydrocarbon|1|Introduction, Alkane
+2026-09-03|Hydrocarbon|2|Preparation of alkane
+2026-09-04|Hydrocarbon|3|Physical properties of alkane
+2026-09-05|Hydrocarbon|4|Chemical properties of alkane | Uses of Alkane
+2026-09-07|Hydrocarbon|5|Preparation of alkene | Properties of alkene
+2026-09-08|Hydrocarbon|6|Physical properties of alkene | Chemical properties of alkene
+2026-09-09|Hydrocarbon|7|Uses of alkene | Test of unsaturation of alkene
+2026-09-10|Hydrocarbon|8|Uses of alkene | Test of unsaturation of alkene
+2026-09-11|Hydrocarbon|9|Preparation of alkyne, Physical properties of alkyne
+2026-09-12|Hydrocarbon|10|Preparation of alkyne, Physical properties of alkyne
+2026-09-15|Hydrocarbon|11|Chemical properties of alkyne | Uses of alkyne
+2026-09-16|Hydrocarbon|12|Chemical properties of alkyne | Uses of alkyne
+2026-09-17|Hydrocarbon|13|Uses of alkyne | Difference between internal and terminal alkyne | Aromatic hydrocarbon
+2026-09-18|Hydrocarbon|14|Benzene, Preparation of benzene | Physical properties of benzene | Chemical properties of benzene | Uses of benzene
+2026-09-19|Hydrocarbon|15|Electrophilic substitution of a monosubstituted benzene | Physical properties
+2026-09-21|Haloalkanes and Haloarenes|1|Introduction
+2026-09-22|Haloalkanes and Haloarenes|2|Classification of Haloalkanes & Haloarenes
+2026-09-23|Haloalkanes and Haloarenes|3|IUPAC Nomenclature, Nature of C-X bond
+2026-09-24|Haloalkanes and Haloarenes|4|Method of preparation of Haloalkanes
+2026-09-25|Haloalkanes and Haloarenes|5|Properties of Haloalkanes
+2026-09-26|Haloalkanes and Haloarenes|6|Nucleophilicity
+2026-09-28|Haloalkanes and Haloarenes|7|Reaction with Metals
+2026-09-29|Haloalkanes and Haloarenes|8|Grignard Reagents
+2026-09-30|Haloalkanes and Haloarenes|9|Grignard Reagents Part 2
+2026-10-01|Haloalkanes and Haloarenes|10|Methods of Preparation of Haloarenes | Properties of Haloarenes | PYQs Discussion
+2026-10-03|Alcohols, Phenols and Ethers|1|Reduction
+2026-10-05|Alcohols, Phenols and Ethers|2|Reduction
+2026-10-06|Alcohols, Phenols and Ethers|3|Reduction
+2026-10-07|Alcohols, Phenols and Ethers|4|Oxidation
+2026-10-08|Alcohols, Phenols and Ethers|5|Oxidation
+2026-10-09|Alcohols, Phenols and Ethers|6|POC
+2026-10-10|Alcohols, Phenols and Ethers|7|POC
+2026-10-12|Alcohols, Phenols and Ethers|8|Carbene and Nitrene
+2026-10-13|Aldehydes, Ketones and Carboxylic Acids|1|Introduction | Structure of Carbonyl group | Nomenclature | methods of preparation of aldehydes and ketones
+2026-10-14|Aldehydes, Ketones and Carboxylic Acids|2|methods of preparation of aldehydes and ketones | methods of preparation of aldehydes Only
+2026-10-15|Aldehydes, Ketones and Carboxylic Acids|3|methods of preparation of aldehydes Only | Physical Properties of aldehydes and ketones
+2026-10-16|Aldehydes, Ketones and Carboxylic Acids|4|Chemical Reactions of Aldehydes and Ketones | Nucleophilic Addition Reaction
+2026-10-17|Aldehydes, Ketones and Carboxylic Acids|5|ALDOL CONDENSATION | Perkin Reaction | Knoevenagel Condensation | Reformatsky Reaction | Cannizzaro Reaction | Tishchenko Reaction | Benzil-benzilic Acid Rearrangement
+2026-10-19|Aldehydes, Ketones and Carboxylic Acids|6|Benzoin Condensation | Wittig reaction | Reduction Reactions | MISCELLANEOUS REACTIONS | Analysis of Aldehydes and Ketones | TESTS OF DISTINGUISH B/W ALDEHYDE & KETONE
+2026-10-21|Aldehydes, Ketones and Carboxylic Acids|7|Other miscellaneous reactions | USES OF ALDEHYDES AND KETONES
+2026-10-22|Aldehydes, Ketones and Car
